@@ -1,0 +1,31 @@
+CREATE TABLE plant_store (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, difficulty_level INTEGER, light_level TEXT, humidity_level TEXT, variegated TEXT);
+-- only created 6 stats for this project
+
+INSERT INTO plant_store VALUES (1, "Monstera Albo", 150, 5, "bright indirect", "moderate", "yes");
+INSERT INTO plant_store VALUES (2, "Monstera Adansonii", 150, 5, "bright indirect", "moderate", "yes");
+INSERT INTO plant_store VALUES (3, "Philodendron Strawberry Shake", 70, 4, "bright direct", "moderate", "yes");
+INSERT INTO plant_store VALUES (4, "Alocasia Bambino Variegated", 150, 5, "bright direct", "moderate-high", "yes");
+INSERT INTO plant_store VALUES (5, "Alocasia Micholitziana", 15, 3, "bright direct", "moderate", "no");
+INSERT INTO plant_store VALUES (6, "Monstera Thai Constellation", 70, 4, "bright indirect", "moderate", "yes");
+INSERT INTO plant_store VALUES (7, "Variegated String of Hearts", 30, 2, "bright indirect", "low-moderate", "yes");
+INSERT INTO plant_store VALUES (8, "ZZ Plant", 10, 1, "bright indirect", "low", "no");
+INSERT INTO plant_store VALUES (9, "Prayer Plant", 15, 2, "bright indirect", "moderate", "no");
+INSERT INTO plant_store VALUES (10, "Peace Lily", 10, 2, "bright indirect", "moderate", "no");
+INSERT INTO plant_store VALUES (11, "Fiddle Leaf Fig Tree", 30, 3, "bright indirect", "low", "no");
+INSERT INTO plant_store VALUES (12, "Aloe Plant", 5, 1, "bright direct", "low moderate", "no"); 
+INSERT INTO plant_store VALUES (13, "Orchid", 10, 3, "bright indirect", "moderate", "no");
+INSERT INTO plant_store VALUES (14, "Pothos", 15, 2, "bright indirect", "moderate", "yes");
+INSERT INTO plant_store VALUES (15, "Snake Plant", 10, 1, "low", "low", "no");
+
+
+SELECT name, price FROM plant_store ORDER BY price asc;
+-- display name and price from database, ordered by ascending price
+
+SELECT AVG(price) FROM plant_store WHERE light_level = "bright indirect"; 
+-- what is the average price of a plant that has a bright indirect light level?
+
+SELECT name, price FROM plant_store ORDER BY price desc LIMIT 5;
+-- what are the five most expensive plants?
+
+SELECT name, price FROM plant_store WHERE variegated = "no" ORDER BY price asc LIMIT 1;
+-- what is the cheapest non-variegated plant?
