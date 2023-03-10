@@ -1,0 +1,42 @@
+-- Joining two tables based on show_id attribute  
+SELECT people.show_id, people.director, titles.show_id, titles.title, titles.type
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" AS people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" AS titles
+ON people.show_id = titles.show_id;
+
+
+-- How many movie titles are there in the database? (movies only, not tv shows)
+SELECT COUNT(*) AS total_movies
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie';
+-- Answer : 6131
+
+
+-- When was the most recent batch of tv shows and/or movies added to the database?
+SELECT MAX(date(date_added))
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" ;
+-- Answer : 2021-09-25
+
+
+-- List all the movies and tv shows in alphabetical order.
+SELECT title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" 
+ORDER BY title ASC;
+
+
+-- Who was the Director for the movie Bright Star?
+SELECT director.director, title.title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" AS director
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" AS title
+ON director.show_id = title.show_id
+WHERE title.title = 'Bright Star';
+-- Answer : Jane Campion
+
+
+-- What is the oldest movie in the database and what year was it made?
+SELECT title, release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" AS title
+WHERE type = 'Movie'
+ORDER BY release_year ASC
+LIMIT 2;
+-- Answer : Prelude to War & The Battle of Midway (both 1942). Originally, I put the limit to 5 so I could see if there was more than one answer.
