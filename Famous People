@@ -1,19 +1,16 @@
--- In this project, you’re going to make your own table with some small set of “famous people”, then make more tables about things they do and join those to create nice human readable lists.
-
--- For example, here are types of famous people and the questions your data could answer:
-
--- Movie stars: What movies are they in? Are they married to each other?
--- Singers: What songs did they write? Where are they from?
--- Authors: What books did they write?
--- Fictional characters: How are they related to other characters? What books do they show up in?
+-- In this project, I created several tables of “famous people”, movies they have starred in, books they've written, people they are married to, and joined those tables to each other to answer various questions.
 
 /* Rating comes from 2023 stats from www.rottentomatoes.com */
 
-CREATE TABLE famous_people (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);
-CREATE TABLE movies (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, rating INTEGER, famous_person INTEGER);
-CREATE TABLE famous_spouses (id INTEGER PRIMARY KEY AUTOINCREMENT, spouse1 INTEGER, spouse2 INTEGER);
-CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, author TEXT, year_released INTEGER);
+-- USING JOIN, LEFT JOIN, MIN/MAX, 
 
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);
+CREATE TABLE movies (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, rating INTEGER, famous_person INTEGER, year INTEGER);
+CREATE TABLE famous_spouses (id INTEGER PRIMARY KEY AUTOINCREMENT, spouse1 INTEGER, spouse2 INTEGER);
+CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, author INTEGER, year_released INTEGER);
+
+
+-- Creating a table with just the names of various famous people
 INSERT INTO famous_people (name) VALUES ("Will Smith");
 INSERT INTO famous_people (name) VALUES ("Jada Pinkett-Smith");
 INSERT INTO famous_people (name) VALUES ("Blake Lively");
@@ -24,104 +21,167 @@ INSERT INTO famous_people (name) VALUES ("Daniel Radcliffe");
 INSERT INTO famous_people (name) VALUES ("Emma Watson");
 INSERT INTO famous_people (name) VALUES ("Rupert Grint");
 INSERT INTO famous_people (name) VALUES ("Georgia Groome");
--- Creating a table with just the names of various famous people
-
-INSERT INTO movies (title, rating, famous_person) VALUES ("I Am Legend", 0.68, 1);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Hancock", 0.41, 1);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Hitch", 0.69, 1);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Ali", 0.68, 1);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Suicide Squad", 0.26, 1);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Ali", 0.68, 2);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Madagasgar", 0.55, 2);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Bad Moms", 0.58, 2);
-INSERT INTO movies (title, rating, famous_person) VALUES ("The Age of Adeline", 0.55, 3);
-INSERT INTO movies (title, rating, famous_person) VALUES ("The Shallows", 0.78, 3);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Green Lantern", 0.26, 3);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Green Lantern", 0.26, 4);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Deadpool", 0.85, 4);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Deadpool 2", 0.84, 4);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Smokin' Aces", 0.30, 4);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Hustlers", 0.87, 5);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Monster-in-Law", 0.18, 5);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Smokin' Aces", 0.30, 5);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Gigli", 0.06, 5);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Gigli", 0.06, 6);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Suicide Squad", 0.26, 6);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Good Will Hunting", 0.97, 6);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Argo", 0.96, 6);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Jungle", 0.61, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("The Lost City", 0.79, 7);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Beauty and the Beast", 0.71, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("The Perks of Being a Wallflower", 0.85, 8);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Knock at the Cabin", 0.67, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Into the White", 0.45, 9);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Angus, Thongs and Perfect Snogging", 0.73, 10);
-INSERT INTO movies (title, rating, famous_person) VALUES ("Double Date", 0.83, 10);
-INSERT INTO movies (title, rating, famous_person) VALUES ("London to Brighton", 0.67, 10);
+INSERT INTO famous_people (name) VALUES ("Fran Drescher");
+INSERT INTO famous_people (name) VALUES ("Margot Robbie");
+INSERT INTO famous_people (name) VALUES ("Tom Ackerley");
+INSERT INTO famous_people (name) VALUES ("Emma Mackey");
+INSERT INTO famous_people (name) VALUES ("Gal Gadot");
+INSERT INTO famous_people (name) VALUES ("Jaron Varsano");
 
 
+-- Table with titles of movies, movie rating, famous person/s who were in the movie, and the year the movie was released
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("I Am Legend", 0.68, 1, 2007);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hancock", 0.41, 1, 2008);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hitch", 0.69, 1, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Ali", 0.68, 1, 2001);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Suicide Squad", 0.26, 1, 2016);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Ali", 0.68, 2, 2001);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Madagasgar", 0.55, 2, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Bad Moms", 0.58, 2, 2016);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("The Age of Adeline", 0.55, 3, 2015);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("The Shallows", 0.78, 3, 2016);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Green Lantern", 0.26, 3, 2011);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Green Lantern", 0.26, 4, 2011);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Deadpool", 0.85, 4, 2016);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Deadpool 2", 0.84, 4, 2018);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Smokin' Aces", 0.30, 4, 2006);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hustlers", 0.87, 5, 2019);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Monster-in-Law", 0.18, 5, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Smokin' Aces", 0.30, 5, 2006);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Gigli", 0.06, 5, 2003);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Gigli", 0.06, 6, 2003);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Suicide Squad", 0.26, 6, 2016);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Good Will Hunting", 0.97, 6, 1997);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Argo", 0.96, 6, 2012);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 7, 2001);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 7, 2002);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 7, 2004);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 7, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 7, 2007);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 7, 2009);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 7, 2010);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 7, 2011);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 8, 2001);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 8, 2002);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 8, 2004);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 8, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 8, 2007);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 8, 2009);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 8, 2010);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 8, 2011);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Sorcerer's Stone", 0.81, 9, 2001);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Chamber of Secrets", 0.82, 9, 2002);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Prisoner of Azkaban", 0.90, 9, 2004);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Goblet of Fire", 0.88, 9, 2005);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Order of the Phoenix", 0.78, 9, 2007);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Half-Blood Prince", 0.84, 9, 2009);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 1", 0.77, 9, 2010);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Harry Potter and the Deathly Hallows - Part 2", 0.96, 9, 2011);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Jungle", 0.61, 7, 2017);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("The Lost City", 0.79, 7, 2022);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Beauty and the Beast", 0.71, 8, 2017);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("The Perks of Being a Wallflower", 0.85, 8, 2012);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Knock at the Cabin", 0.67, 9, 2023);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Into the White", 0.45, 9, 2012);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Angus, Thongs and Perfect Snogging", 0.73, 10, 2008);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Double Date", 0.83, 10, 2017);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("London to Brighton", 0.67, 10, 2006);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Ghosted", 0.58, 4, 2023);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Spirited", 0.66, 4, 2022);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hotel Transylvania", 0.45, 11, 2012);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hotel Transylvania 2", 0.56, 11, 2015);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hotel Transylvania 3: Summer Vacation", 0.62, 11, 2018);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Hotel Transylvania 4: Transformania", 0.49, 11, 2022);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Barbie", 0.88, 12, 2023);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("The Wolf of Wall Street", 0.80, 12, 2013);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Suicide Squad", 0.26, 12, 2012);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Focus", 0.56, 12, 2015);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Focus", 0.56, 1, 2015);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("I, Tonya", 0.90, 12, 2017);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Barbie", 0.88, 14, 2023);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Emily", 0.88, 14, 2022);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Death on the Nile", 0.61, 14, 2022);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Eiffel", 0.49, 14, 2021);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Wonder Woman: 1984", 0.58, 16, 2021);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Wonder Woman: 1984", 0.58, 15, 2021);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Wonder Woman", 0.93, 15, 2017);
+INSERT INTO movies (title, rating, famous_person, year) VALUES ("Keeping Up with the Joneses", 0.19, 15, 2016);
+
+
+
+-- Table of famous people who are married to each other
 INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("1", "2");
 INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("4", "3");
 INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("6", "5");
 INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("9", "10");
-
-INSERT INTO books (name, author, year_released) VALUES ("Will", "1", 2021);
-INSERT INTO books (name, author, year_released) VALUES ("Girls Hold Up This World", "2", 2004);
-INSERT INTO books (name, author, year_released) VALUES ("True Love", "5", 2014);
-INSERT INTO books (name, author, year_released) VALUES ("Con Polo", "5", 2022);
-INSERT INTO books (name, author, year_released) VALUES ("Good Will Hunting - A Screenplay", "6", 1998);
+INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("13", "12");
+INSERT INTO famous_spouses (spouse1, spouse2) VALUES ("16", "15");
+INSERT INTO famous_spouses (spouse1, spouse2) VALUES (
 
 
+-- Table of books written by famous people
+INSERT INTO books (name, author, year_released) VALUES ("Will", 1, 2021);
+INSERT INTO books (name, author, year_released) VALUES ("Girls Hold Up This World", 2, 2004);
+INSERT INTO books (name, author, year_released) VALUES ("True Love", 5, 2014);
+INSERT INTO books (name, author, year_released) VALUES ("Con Polo", 5, 2022);
+INSERT INTO books (name, author, year_released) VALUES ("Good Will Hunting - A Screenplay", 6, 1998);
+INSERT INTO books (name, author, year_released) VALUES ("Cancer Schmancer", 11, 2002);
 
--- Matching spouses.
-SELECT a.name AS Husband, b.name AS Wife 
-FROM famous_spouses 
-JOIN famous_people a 
-ON spouse1 = a.id 
-JOIN famous_people b 
-ON spouse2 = b.id;
+
+-- matching spouses, only showing who is married
+SELECT a.name AS spouse1, b.name AS spouse2
+FROM famous_spouses
+JOIN famous_people AS a
+ON a.id = famous_spouses.spouse1
+JOIN famous_people AS b
+ON b.id = famous_spouses.spouse2;
+
+-- matching spouses, including those that are not married
+SELECT a.name AS spouse1, b.name AS spouse2
+FROM famous_spouses
+LEFT JOIN famous_people AS a
+ON famous_spouses.spouse1 = a.id
+LEFT JOIN famous_people AS b
+ON famous_spouses.spouse2 = b.id;
 
 
--- Matching books to their famous_person author, ordered by latest release year.
+-- matching books to their famous_person author, ordered by latest release year
 SELECT books.name AS Book, books.year_released AS Published, famous_people.name AS Author 
 FROM books 
 JOIN famous_people 
 ON books.author = famous_people.id 
 ORDER BY books.year_released desc;
 
+-- OR, revised version of book-to-author matching
+SELECT a.name, b.name AS author, a.year_released
+FROM famous_people
+JOIN books AS a
+ON famous_people.id = a.author
+JOIN famous_people AS b
+ON famous_people.id = b.id
+ORDER BY a.year_released desc;
 
--- Which movie had the highest and lowest rating? Which person did those ratings belong to?
+
+-- which movie had the highest and lowest rating? Which person did those ratings belong to? (would like to come back and have one row for high, one for low, column with name, column with rating, column with movie title)
 SELECT movies.title AS Title, ROUND(movies.rating * 100) AS Rating, famous_people.name AS Person 
 FROM movies 
 JOIN famous_people 
 ON movies.famous_person = famous_people.id 
 ORDER BY Rating desc;
 
--- Matching Actors/Actresses with movies that they have been in. Need to come back and figure out how to have only one name on left side and multiple movie titles on right side.
+
+-- what was each famous person's highest and lowest movie rating? Different from above. Showing individual person's highest/lowest rating
+SELECT a.name, b.high_rating, b.low_rating
+FROM famous_people a
+LEFT JOIN (SELECT famous_person
+, MIN(ROUND(rating*100)) high_rating
+, MAX(ROUND(rating*100)) low_rating
+FROM movies
+GROUP BY famous_person) b
+ON a.id = b.famous_person; 
+
+
+-- matching Actors/Actresses with movies that they have been in. Need to come back and figure out how to have only one name on left side and multiple movie titles on right side.
 SELECT famous_people.name AS Person, movies.title AS Movie
 FROM famous_people 
 LEFT JOIN movies 
